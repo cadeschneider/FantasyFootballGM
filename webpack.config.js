@@ -8,6 +8,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Document',
+      template: './src/index.html'
     }),
   ],
   devServer: {

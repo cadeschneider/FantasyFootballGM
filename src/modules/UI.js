@@ -7,11 +7,6 @@ export default class UI {
 
     //INITIALIZATION
     static loadHomepage() {
-        UI.createBanner()
-        UI.createMain()
-        UI.createSideNav()
-        UI.createMainBlock()
-        UI.initOverviewButtons()
         UI.addLeagueButton()
         StorageObj.getOverview().getLeagues().forEach((league) => UI.newOverviewDisplay(league.getName()))
 
@@ -32,12 +27,13 @@ export default class UI {
 
     static openLeagueButton(element,name) {
         element.addEventListener('click', function() {
-            const main = document.querySelector('#mainBlock')
-            main.innerHTML =''
+            const mainBlock = document.querySelector('#mainBlock')
+            mainBlock.innerHTML =''
+
             const roster = StorageObj.getOverview().getLeague(name).getRoster()
             const watching = StorageObj.getOverview().getLeague(name).getWatching()
 
-            UI.newLeagueDisplay(name)
+            UI.newLeagueDisplay(`<h3>${name}</h3>`)
             UI.initLeagueButtons()
             UI.addPlayerButton(name)
             roster.forEach((player) => UI.newLeagueDisplay(player.getName()))
@@ -57,59 +53,13 @@ export default class UI {
                 StorageObj.addWatchingPlayer(league, new PlayerObj(playerName))
             }
 
-            UI.addToMain(UI.newLeagueDisplay(playerName))
+
+            roster.forEach((player) => UI.newLeagueDisplay(player.getName()))
+            watching.forEach((player) => UI.newLeagueDisplay(player.getName()))
         })
     }
 
     //VISUAL FUNCTIONALITY
-
-    static createBanner(){
-        const header = document.createElement('header')
-        const titleblock = document.createElement('div')
-        const title = document.createElement('h1')
-        title.textContent = "FANTASY FOOTBALL GM"
-        titleblock.appendChild(title)
-        header.appendChild(titleblock)
-
-        const footer = document.createElement('footer')
-        const footerblock = document.createElement('div')
-        footerblock.textContent= 'Created by Cade Sixkiller Schneider'
-        footer.appendChild(footerblock)
-
-        return document.body.append(header, footer)
-
-    }
-
-    static createSideNav(){
-        const nav = document.createElement('nav')
-        const main= document.querySelector('main')
-        return main.appendChild(nav)
-
-    }
-
-    static createMain(){
-        const main = document.createElement('main')
-        return document.body.appendChild(main)
-    }
-
-    static createMainBlock(){
-        const mainBlock = document.createElement('div')
-        mainBlock.id = "mainBlock"
-        const main = document.querySelector('main')
-        return main.appendChild(mainBlock)
-    }
-
-    static initOverviewButtons() {
-        const element = document.createElement('div');
-        const inpt = document.createElement('input');
-        const btn = document.createElement('button');
-        inpt.id = "inptLeague"
-        btn.id = "submitLeague"
-        element.appendChild(inpt)
-        element.appendChild(btn)
-
-        return UI.addToSideNav(element)
-    }
 
     static initLeagueButtons() {
         const element = document.createElement('div');
@@ -123,6 +73,7 @@ export default class UI {
         element.appendChild(inpt)
         element.appendChild(btn)
         element.appendChild(chkbx)
+        element.className="add"
 
         return UI.addToMainBlock(element)
     }
@@ -130,19 +81,20 @@ export default class UI {
     static newOverviewDisplay(name) {
         const element = document.createElement('div')
         element.innerHTML += name
-        this.openLeagueButton(element, name)
+        UI.openLeagueButton(element, name)
         return UI.addToSideNav(element)
     }
 
     static newLeagueDisplay(name) {
         const element = document.createElement('div')
         element.innerHTML += name
+        
 
         return UI.addToMainBlock(element)
     }
 
     static addToSideNav(item){
-        const nav = document.querySelector('nav')
+        const nav = document.querySelector('.leagues')
         return nav.appendChild(item)
 
     }
