@@ -33,7 +33,7 @@ export default class UI {
             const roster = StorageObj.getOverview().getLeague(name).getRoster()
             const watching = StorageObj.getOverview().getLeague(name).getWatching()
 
-            UI.newLeagueDisplay(`<h3>${name}</h3>`)
+            UI.newLeagueDisplay(`<h3>${name.toUpperCase()}</h3>`)
             UI.initLeagueButtons()
             UI.addPlayerButton(name)
             roster.forEach((player) => UI.newLeagueDisplay(player.getName()))
@@ -75,14 +75,15 @@ export default class UI {
         element.appendChild(inpt)
         element.appendChild(btn)
         element.appendChild(chkbx)
-        element.className="add"
+        element.className="addControls"
 
         return UI.addToMainBlock(element)
     }
 
     static newOverviewDisplay(name) {
         const element = document.createElement('div')
-        element.innerHTML += name
+        element.innerHTML += name.toUpperCase()
+        element.className= "lists"
         UI.openLeagueButton(element, name)
         return UI.addToSideNav(element)
     }
@@ -90,13 +91,14 @@ export default class UI {
     static newLeagueDisplay(name) {
         const element = document.createElement('div')
         element.innerHTML += name
+        element.className = "lists"
         
 
         return UI.addToMainBlock(element)
     }
 
     static addToSideNav(item){
-        const nav = document.querySelector('.leagues')
+        const nav = document.querySelector('#leagues')
         return nav.appendChild(item)
 
     }
