@@ -39,6 +39,7 @@ export default class UI {
             roster.forEach((player) => UI.newLeagueDisplay(player.getName()))
             watching.forEach((player) => UI.newLeagueDisplay(player.getName()))
         })
+
     }
 
     static addPlayerButton(league) {
@@ -68,6 +69,7 @@ export default class UI {
         const chkbx = document.createElement('input');
         inpt.id = "inptPlayer"
         btn.id = "submitPlayer"
+        btn.innerHTML = "&plus;"
         chkbx.id = "chkRostered"
         chkbx.type = "checkbox"
         element.appendChild(inpt)
